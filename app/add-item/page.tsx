@@ -86,7 +86,9 @@ export default function AddItemPage() {
           .from("item-photos")
           .upload(fileName, image);
 
-        if (uploadError) throw uploadError;
+        if (uploadError) {
+          throw new Error(`Photo upload failed: ${uploadError.message}`);
+        }
 
         const {
           data: { publicUrl },
@@ -106,7 +108,9 @@ export default function AddItemPage() {
         date_added: new Date().toISOString(),
       });
 
-      if (insertError) throw insertError;
+      if (insertError) {
+        throw new Error(`Database insert failed: ${insertError.message}`);
+      }
 
       setMessage(`✓ Item ${serialNumber} added to stock`);
       setMessageType("success");

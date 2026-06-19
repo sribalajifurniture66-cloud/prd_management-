@@ -16,6 +16,9 @@ A single-admin web app for tracking furniture stock and recording sales in real 
 4. Go to **SQL Editor** → paste contents of `migrations/001_init.sql` → click **Run**
 5. Go to **Settings** → **API** → copy your **Project URL** and **anon public key**
 
+If the project was created before the storage policies were added, also run
+`migrations/002_fix_write_policies.sql` in the SQL Editor.
+
 ### 2. Environment Setup
 
 Create `.env.local` in the project root:

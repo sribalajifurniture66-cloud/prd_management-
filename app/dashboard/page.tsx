@@ -96,39 +96,43 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="page-shell">
         <Nav />
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-lg text-gray-600">Loading...</p>
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <p className="text-sm font-semibold text-slate-500">Loading dashboard…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-shell">
       <Nav />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Dashboard</h1>
+      <main className="page-container">
+        <div className="page-heading">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">Overview</p>
+          <h1 className="page-title">Stock dashboard</h1>
+          <p className="page-description">A quick view of inventory movement and sales performance.</p>
+        </div>
 
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500">Total Items Added</p>
-            <p className="text-3xl font-bold text-gray-900">{stats.totalAdded}</p>
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:mb-8 sm:gap-4 lg:grid-cols-4">
+          <div className="surface p-4 sm:p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">All items</p>
+            <p className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">{stats.totalAdded}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500">Currently In Stock</p>
-            <p className="text-3xl font-bold text-green-600">{stats.inStock}</p>
+          <div className="surface p-4 sm:p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">In stock</p>
+            <p className="mt-2 text-2xl font-bold tracking-tight text-emerald-600 sm:text-3xl">{stats.inStock}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500">Total Sold</p>
-            <p className="text-3xl font-bold text-blue-600">{stats.totalSold}</p>
+          <div className="surface p-4 sm:p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Sold</p>
+            <p className="mt-2 text-2xl font-bold tracking-tight text-sky-600 sm:text-3xl">{stats.totalSold}</p>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <p className="text-sm text-gray-500">Total Revenue</p>
-            <p className="text-3xl font-bold text-indigo-600">
+          <div className="surface col-span-2 p-4 sm:p-6 lg:col-span-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Revenue</p>
+            <p className="mt-2 text-2xl font-bold tracking-tight text-violet-600 sm:text-3xl">
               ₹{stats.totalRevenue.toLocaleString()}
             </p>
           </div>
@@ -136,9 +140,9 @@ export default function DashboardPage() {
 
         {/* Charts */}
         {categoryBreakdown.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div className="bg-white rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Sales by Category</h2>
+          <div className="mb-6 grid grid-cols-1 gap-4 sm:mb-8 lg:grid-cols-2">
+            <div className="surface p-4 sm:p-6">
+              <h2 className="mb-4 text-lg font-bold text-slate-900">Sales by category</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={categoryBreakdown}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -146,21 +150,21 @@ export default function DashboardPage() {
                   <YAxis />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="count" fill="#8b5cf6" name="Items Sold" />
+                  <Bar dataKey="count" fill="#059669" radius={[6, 6, 0, 0]} name="Items Sold" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
             {dailyRevenue.length > 0 && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Revenue Over Time</h2>
+              <div className="surface p-4 sm:p-6">
+                <h2 className="mb-4 text-lg font-bold text-slate-900">Revenue over time</h2>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={dailyRevenue}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
                     <YAxis />
                     <Tooltip />
-                    <Line type="monotone" dataKey="revenue" stroke="#6366f1" />
+                  <Line type="monotone" dataKey="revenue" stroke="#7c3aed" strokeWidth={3} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -170,13 +174,14 @@ export default function DashboardPage() {
 
         {/* Sold Items Table */}
         {items.filter((i) => i.status === "sold").length > 0 && (
-          <div className="bg-white rounded-lg shadow mb-8 overflow-hidden">
-            <div className="px-6 py-4 border-b">
-              <h2 className="text-xl font-bold text-gray-900">Recently Sold</h2>
+          <div className="surface mb-6 overflow-hidden sm:mb-8">
+            <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
+              <h2 className="text-lg font-bold text-slate-900">Recently sold</h2>
+              <p className="mt-1 text-sm text-slate-500">Completed sales and final prices</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-100">
+            <div>
+              <table className="responsive-table w-full text-sm">
+                <thead className="bg-slate-50">
                   <tr>
                     <th className="text-left px-6 py-3 font-semibold text-gray-700">Serial</th>
                     <th className="text-left px-6 py-3 font-semibold text-gray-700">Name</th>
@@ -193,14 +198,14 @@ export default function DashboardPage() {
                     .filter((i) => i.status === "sold")
                     .map((item) => (
                       <tr key={item.serial_number} className="hover:bg-gray-50">
-                        <td className="px-6 py-3 font-mono text-gray-900">{item.serial_number}</td>
-                        <td className="px-6 py-3">{item.name}</td>
-                        <td className="px-6 py-3 text-gray-600">{item.category}</td>
-                        <td className="px-6 py-3">₹{item.listed_price.toLocaleString()}</td>
-                        <td className="px-6 py-3 font-bold text-green-600">
+                        <td data-label="Serial" className="px-6 py-3 font-mono font-semibold text-slate-900">{item.serial_number}</td>
+                        <td data-label="Name" className="px-6 py-3">{item.name}</td>
+                        <td data-label="Category" className="px-6 py-3 text-slate-500">{item.category}</td>
+                        <td data-label="Listed" className="px-6 py-3">₹{item.listed_price.toLocaleString()}</td>
+                        <td data-label="Sold for" className="px-6 py-3 font-bold text-emerald-600">
                           ₹{item.price_sold?.toLocaleString()}
                         </td>
-                        <td className="px-6 py-3 text-gray-600">
+                        <td data-label="Date" className="px-6 py-3 text-slate-500">
                           {new Date(item.date_sold || "").toLocaleDateString()}
                         </td>
                       </tr>
@@ -213,13 +218,14 @@ export default function DashboardPage() {
 
         {/* In Stock Table */}
         {items.filter((i) => i.status === "in_stock").length > 0 && (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-6 py-4 border-b">
-              <h2 className="text-xl font-bold text-gray-900">In Stock</h2>
+          <div className="surface overflow-hidden">
+            <div className="border-b border-slate-200 px-5 py-4 sm:px-6">
+              <h2 className="text-lg font-bold text-slate-900">In stock</h2>
+              <p className="mt-1 text-sm text-slate-500">Items currently available to sell</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-gray-100">
+            <div>
+              <table className="responsive-table w-full text-sm">
+                <thead className="bg-slate-50">
                   <tr>
                     <th className="text-left px-6 py-3 font-semibold text-gray-700">Serial</th>
                     <th className="text-left px-6 py-3 font-semibold text-gray-700">Name</th>
@@ -233,11 +239,11 @@ export default function DashboardPage() {
                     .filter((i) => i.status === "in_stock")
                     .map((item) => (
                       <tr key={item.serial_number} className="hover:bg-gray-50">
-                        <td className="px-6 py-3 font-mono text-gray-900">{item.serial_number}</td>
-                        <td className="px-6 py-3">{item.name}</td>
-                        <td className="px-6 py-3 text-gray-600">{item.category}</td>
-                        <td className="px-6 py-3">₹{item.listed_price.toLocaleString()}</td>
-                        <td className="px-6 py-3 text-gray-600">
+                        <td data-label="Serial" className="px-6 py-3 font-mono font-semibold text-slate-900">{item.serial_number}</td>
+                        <td data-label="Name" className="px-6 py-3">{item.name}</td>
+                        <td data-label="Category" className="px-6 py-3 text-slate-500">{item.category}</td>
+                        <td data-label="Price" className="px-6 py-3 font-semibold">₹{item.listed_price.toLocaleString()}</td>
+                        <td data-label="Added" className="px-6 py-3 text-slate-500">
                           {new Date(item.date_added).toLocaleDateString()}
                         </td>
                       </tr>
@@ -247,7 +253,7 @@ export default function DashboardPage() {
             </div>
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

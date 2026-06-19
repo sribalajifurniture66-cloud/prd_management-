@@ -27,16 +27,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">
-          Furniture Tracker
-        </h1>
-        <p className="text-center text-gray-500 mb-8">Stock & Sales Admin</p>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 p-4 sm:p-6">
+      <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-emerald-500/20 blur-3xl" />
+      <div className="absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-teal-400/10 blur-3xl" />
 
-        <form onSubmit={handleLogin} className="space-y-4">
+      <div className="relative w-full max-w-md rounded-3xl border border-white/10 bg-white p-6 shadow-2xl shadow-black/30 sm:p-9">
+        <div className="mb-8 flex items-center gap-4">
+          <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-emerald-600 text-xl font-black text-white shadow-lg shadow-emerald-600/20">
+            V
+          </span>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">Welcome back</h1>
+            <p className="mt-1 text-sm text-slate-500">Sign in to Vardhan Stock Room</p>
+          </div>
+        </div>
+
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label htmlFor="password" className="form-label">
               Admin Password
             </label>
             <input
@@ -44,22 +52,26 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="form-control"
               placeholder="Enter password"
               autoFocus
             />
           </div>
 
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <p className="status-message border-red-200 bg-red-50 text-red-700">{error}</p>}
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+            className="primary-button w-full"
           >
-            Login
+            Enter dashboard
           </button>
         </form>
+
+        <p className="mt-6 text-center text-xs leading-5 text-slate-400">
+          Private inventory and sales workspace
+        </p>
       </div>
-    </div>
+    </main>
   );
 }

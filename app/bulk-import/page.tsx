@@ -159,35 +159,36 @@ export default function BulkImportPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-shell">
       <Nav />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Bulk Import</h1>
-        <p className="text-gray-600 mb-8">Upload a CSV file to add multiple items at once</p>
+      <main className="page-container max-w-5xl">
+        <div className="page-heading">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">Inventory</p>
+          <h1 className="page-title">Bulk import</h1>
+          <p className="page-description">Add many products at once from a correctly formatted CSV file.</p>
+        </div>
 
-        <div className="bg-white rounded-lg shadow p-8 mb-8">
+        <div className="surface mb-6 p-5 sm:mb-8 sm:p-8">
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-4">
-              CSV File (serial_number, name, category, listed_price)
+            <label className="form-label">
+              Choose CSV file
             </label>
+            <p className="mb-3 text-xs leading-5 text-slate-500">Columns: serial_number, name, category, listed_price</p>
             <input
               type="file"
               accept=".csv"
               onChange={handleFileChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              className="block w-full cursor-pointer rounded-xl border border-dashed border-slate-300 bg-slate-50 p-3 text-sm text-slate-500 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-xs file:font-bold file:text-white hover:border-slate-400"
             />
-            <p className="text-xs text-gray-500 mt-2">
-              Required columns: serial_number, name, category, listed_price
-            </p>
           </div>
 
           {message && (
             <div
-              className={`p-4 rounded-lg text-center font-semibold ${
+              className={`status-message ${
                 messageType === "success"
-                  ? "bg-green-100 text-green-700"
-                  : "bg-red-100 text-red-700"
+                  ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                  : "border-red-200 bg-red-50 text-red-700"
               }`}
             >
               {message}
@@ -197,8 +198,8 @@ export default function BulkImportPage() {
 
         {/* Validation Errors */}
         {validationErrors.length > 0 && (
-          <div className="bg-red-50 rounded-lg shadow p-8 mb-8">
-            <h2 className="text-lg font-bold text-red-700 mb-4">Validation Errors</h2>
+          <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-5 sm:mb-8 sm:p-8">
+            <h2 className="mb-4 text-lg font-bold text-red-800">Needs attention</h2>
             <div className="space-y-2">
               {validationErrors.map((error, idx) => (
                 <p key={idx} className="text-sm text-red-600">
@@ -211,11 +212,14 @@ export default function BulkImportPage() {
 
         {/* Preview */}
         {showPreview && csvData.length > 0 && (
-          <div className="bg-white rounded-lg shadow p-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Preview ({csvData.length} items)</h2>
-            <div className="overflow-x-auto mb-6">
+          <div className="surface overflow-hidden">
+            <div className="border-b border-slate-200 px-5 py-4 sm:px-8">
+              <h2 className="text-lg font-bold text-slate-900">Import preview</h2>
+              <p className="mt-1 text-sm text-slate-500">{csvData.length} items ready</p>
+            </div>
+            <div className="mb-2 overflow-x-auto">
               <table className="w-full text-sm">
-                <thead className="bg-gray-100">
+                <thead className="bg-slate-50">
                   <tr>
                     <th className="text-left px-4 py-2 font-semibold text-gray-700">Serial</th>
                     <th className="text-left px-4 py-2 font-semibold text-gray-700">Name</th>
@@ -236,22 +240,24 @@ export default function BulkImportPage() {
               </table>
             </div>
 
-            {csvData.length > 10 && (
-              <p className="text-sm text-gray-600 mb-6">
+            <div className="border-t border-slate-200 p-5 sm:flex sm:items-center sm:justify-between sm:px-8">
+              {csvData.length > 10 && (
+              <p className="mb-4 text-sm text-slate-500 sm:mb-0">
                 ... and {csvData.length - 10} more items
               </p>
-            )}
+              )}
 
             <button
               onClick={handleImport}
               disabled={submitting}
-              className="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+              className="primary-button w-full sm:ml-auto sm:w-auto"
             >
               {submitting ? "Importing..." : "Confirm Import"}
             </button>
+            </div>
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

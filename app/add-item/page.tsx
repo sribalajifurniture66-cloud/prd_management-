@@ -143,17 +143,21 @@ export default function AddItemPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-shell">
       <Nav />
 
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Add Item to Stock</h1>
+      <main className="page-container max-w-3xl">
+        <div className="page-heading">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">Inventory</p>
+          <h1 className="page-title">Add a new item</h1>
+          <p className="page-description">Create a stock record. Add a clear photo so it is easy to identify at sale time.</p>
+        </div>
 
-        <div className="bg-white rounded-lg shadow p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="surface p-5 sm:p-8">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             {/* Serial Number */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="form-label">
                 Serial Number *
               </label>
               <input
@@ -162,13 +166,13 @@ export default function AddItemPage() {
                 value={formData.serial_number}
                 onChange={handleInputChange}
                 placeholder="e.g. SN-0001"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="form-control font-mono uppercase"
               />
             </div>
 
             {/* Item Name */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="form-label">
                 Item Name *
               </label>
               <input
@@ -177,18 +181,18 @@ export default function AddItemPage() {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="e.g. Oak Dining Chair"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="form-control"
               />
             </div>
 
             {/* Category */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Category *</label>
+              <label className="form-label">Category *</label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="form-control"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -200,7 +204,7 @@ export default function AddItemPage() {
 
             {/* Listed Price */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="form-label">
                 Listed Price (₹) *
               </label>
               <input
@@ -209,7 +213,7 @@ export default function AddItemPage() {
                 value={formData.listed_price}
                 onChange={handleInputChange}
                 placeholder="0"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="form-control"
                 min="0"
                 step="0.01"
               />
@@ -217,14 +221,14 @@ export default function AddItemPage() {
 
             {/* Photo Upload */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="form-label">
                 Photo (Optional)
               </label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                className="block w-full cursor-pointer rounded-xl border border-dashed border-slate-300 bg-slate-50 p-3 text-sm text-slate-500 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-900 file:px-3 file:py-2 file:text-xs file:font-bold file:text-white hover:border-slate-400"
               />
               {imagePreview && (
                 <div className="mt-4">
@@ -233,7 +237,7 @@ export default function AddItemPage() {
                     alt="Preview"
                     width={200}
                     height={200}
-                    className="rounded-lg object-cover"
+                  className="h-40 w-full rounded-xl object-cover sm:h-52"
                   />
                 </div>
               )}
@@ -242,10 +246,10 @@ export default function AddItemPage() {
             {/* Message */}
             {message && (
               <div
-                className={`p-4 rounded-lg text-center font-semibold ${
+                className={`status-message text-center ${
                   messageType === "success"
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : "border-red-200 bg-red-50 text-red-700"
                 }`}
               >
                 {message}
@@ -256,13 +260,13 @@ export default function AddItemPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+              className="primary-button w-full"
             >
               {submitting ? "Adding..." : "Add Item"}
             </button>
           </form>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

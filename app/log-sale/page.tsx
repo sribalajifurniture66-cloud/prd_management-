@@ -108,30 +108,38 @@ export default function LogSalePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="page-shell">
         <Nav />
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-lg text-gray-600">Loading...</p>
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <p className="text-sm font-semibold text-slate-500">Loading stock…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-shell">
       <Nav />
 
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Log a Sale</h1>
-        <p className="text-gray-600 mb-8">
-          {inStockItems.length} items in stock ready to sell
-        </p>
+      <main className="page-container max-w-3xl">
+        <div className="page-heading">
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-emerald-600">Sales</p>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h1 className="page-title">Log a sale</h1>
+              <p className="page-description">Find an item, confirm the price, and mark it as sold.</p>
+            </div>
+            <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700">
+              {items.length} in stock
+            </span>
+          </div>
+        </div>
 
-        <div className="bg-white rounded-lg shadow p-8">
-          <form onSubmit={handleMarkSold} className="space-y-6">
+        <div className="surface p-5 sm:p-8">
+          <form onSubmit={handleMarkSold} className="space-y-5 sm:space-y-6">
             {/* Item Selection */}
             <div className="relative">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="form-label">
                 Select Item to Sell
               </label>
               <input
@@ -140,21 +148,21 @@ export default function LogSalePage() {
                 onChange={(e) => handleSearch(e.target.value)}
                 onFocus={() => setShowDropdown(true)}
                 placeholder="Search by serial number or name..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg"
+                className="form-control"
               />
 
               {/* Dropdown */}
               {showDropdown && inStockItems.length > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
+                <div className="absolute left-0 right-0 top-full z-20 mt-2 max-h-64 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
                   {inStockItems.map((item) => (
                     <button
                       key={item.serial_number}
                       type="button"
                       onClick={() => handleSelectItem(item)}
-                      className="w-full text-left px-4 py-3 hover:bg-indigo-50 border-b last:border-b-0 transition-colors"
+                      className="w-full rounded-lg px-3 py-3 text-left transition hover:bg-emerald-50"
                     >
-                      <div className="font-semibold text-gray-900">{item.serial_number}</div>
-                      <div className="text-sm text-gray-600">{item.name}</div>
+                      <div className="font-mono text-sm font-bold text-slate-900">{item.serial_number}</div>
+                      <div className="mt-0.5 text-sm text-slate-500">{item.name}</div>
                     </button>
                   ))}
                 </div>
@@ -163,7 +171,7 @@ export default function LogSalePage() {
 
             {/* Selected Item Details */}
             {selectedItem && (
-              <div className="border border-indigo-200 rounded-lg p-6 bg-indigo-50">
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 sm:p-6">
                 {selectedItem.image_url && (
                   <div className="mb-4">
                     <Image
@@ -171,29 +179,29 @@ export default function LogSalePage() {
                       alt={selectedItem.name}
                       width={300}
                       height={300}
-                      className="rounded-lg object-cover w-full max-w-md"
+                    className="h-52 w-full rounded-xl object-cover sm:h-64"
                     />
                   </div>
                 )}
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <p className="text-sm text-gray-600">Item Name</p>
-                    <p className="text-lg font-bold text-gray-900">{selectedItem.name}</p>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Item Name</p>
+                    <p className="mt-1 font-bold text-slate-900">{selectedItem.name}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Category</p>
-                    <p className="text-lg font-bold text-gray-900">{selectedItem.category}</p>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Category</p>
+                    <p className="mt-1 font-bold text-slate-900">{selectedItem.category}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Serial Number</p>
-                    <p className="text-lg font-mono font-bold text-gray-900">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Serial Number</p>
+                    <p className="mt-1 font-mono font-bold text-slate-900">
                       {selectedItem.serial_number}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Listed Price</p>
-                    <p className="text-lg font-bold text-green-600">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Listed Price</p>
+                    <p className="mt-1 font-bold text-emerald-700">
                       ₹{selectedItem.listed_price.toLocaleString()}
                     </p>
                   </div>
@@ -203,7 +211,7 @@ export default function LogSalePage() {
 
             {/* Sale Price Input */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="form-label">
                 Sale Price (₹)
               </label>
               <input
@@ -211,7 +219,7 @@ export default function LogSalePage() {
                 value={salePrice}
                 onChange={(e) => setSalePrice(e.target.value)}
                 placeholder="Enter actual sale price"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg"
+                className="form-control text-lg font-semibold"
                 min="0"
                 step="0.01"
               />
@@ -220,10 +228,10 @@ export default function LogSalePage() {
             {/* Message */}
             {message && (
               <div
-                className={`p-4 rounded-lg text-center font-semibold ${
+                className={`status-message text-center ${
                   message.startsWith("✓")
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : "border-red-200 bg-red-50 text-red-700"
                 }`}
               >
                 {message}
@@ -234,13 +242,13 @@ export default function LogSalePage() {
             <button
               type="submit"
               disabled={!selectedItem || !salePrice || submitting}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-bold py-4 px-6 rounded-lg text-lg transition-colors"
+              className="primary-button w-full sm:text-base"
             >
               {submitting ? "Saving..." : "Mark as Sold"}
             </button>
           </form>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

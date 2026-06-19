@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS items (
   serial_number TEXT PRIMARY KEY UNIQUE NOT NULL,
   name TEXT NOT NULL,
   category TEXT NOT NULL,
+  color TEXT,
   image_url TEXT,
   listed_price NUMERIC NOT NULL CHECK (listed_price >= 0),
   status TEXT NOT NULL DEFAULT 'in_stock' CHECK (status IN ('in_stock', 'sold')),

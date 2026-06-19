@@ -12,6 +12,7 @@ export default function AddItemPage() {
     serial_number: "",
     name: "",
     category: "Chair",
+    color: "",
     listed_price: "",
   });
   const [image, setImage] = useState<File | null>(null);
@@ -102,6 +103,7 @@ export default function AddItemPage() {
         serial_number: serialNumber,
         name,
         category: formData.category,
+        color: formData.color || null,
         listed_price: listedPrice,
         image_url: imageUrl,
         status: "in_stock",
@@ -121,6 +123,7 @@ export default function AddItemPage() {
           serial_number: "",
           name: "",
           category: "Chair",
+          color: "",
           listed_price: "",
         });
         setImage(null);
@@ -200,6 +203,21 @@ export default function AddItemPage() {
                   </option>
                 ))}
               </select>
+            </div>
+
+            {/* Color */}
+            <div>
+              <label className="form-label">
+                Color (Optional)
+              </label>
+              <input
+                type="text"
+                name="color"
+                value={formData.color}
+                onChange={handleInputChange}
+                placeholder="e.g. Black, Red, Natural Wood"
+                className="form-control"
+              />
             </div>
 
             {/* Listed Price */}

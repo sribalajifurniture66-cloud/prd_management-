@@ -2,6 +2,7 @@ export type Item = {
   serial_number: string;
   name: string;
   category: string;
+  color: string | null;
   image_url: string | null;
   listed_price: number;
   status: "in_stock" | "sold";

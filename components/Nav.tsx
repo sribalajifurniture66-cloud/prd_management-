@@ -7,7 +7,7 @@ const links = [
   { href: "/dashboard", label: "Dashboard", shortLabel: "Home", icon: "⌂" },
   { href: "/log-sale", label: "Log sale", shortLabel: "Sell", icon: "₹" },
   { href: "/add-item", label: "Add item", shortLabel: "Add", icon: "+" },
-  { href: "/bulk-import", label: "Import", shortLabel: "Import", icon: "⇧" },
+  { href: "/analytics", label: "Analytics", shortLabel: "Data", icon: "📊" },
 ];
 
 export default function Nav() {
